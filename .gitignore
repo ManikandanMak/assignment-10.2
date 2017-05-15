@@ -1,0 +1,8 @@
+create table if not exists temperature_date(date string,
+    > zip int,
+    > temp int)
+    > row format delimited
+    > fields terminated by ',';
+    
+load data local inpath '/home/acadgild/temp' into table temperature_date;
+temperature_date group by FROM_UNIXTIME(UNIX_TIMESTAMP(date,'dd-mm-yyyy'),'yyyy') having COUNT(FROM_UNIXTIME(UNIX_TIMESTAMP(date,'dd-mm-yyyy'),'yyyy')) >=2;
